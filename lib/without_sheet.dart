@@ -1,3 +1,4 @@
+import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -151,6 +152,7 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> with TickerProv
         _isSheetOpen = false;
       });
     });
+    _tabController.animateTo(widget.navigationShell.currentIndex);
   }
 
   void _onTabTapped(int index) {
@@ -222,10 +224,7 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> with TickerProv
           begin: const Offset(0, 1),
           end: Offset.zero,
         ).animate(_animation),
-        child: const SizedBox(
-          height: 250,
-          child: _MenuBottomSheetBody(),
-        ),
+        child: const _MenuBottomSheetBody(),
       ),
     );
   }
@@ -240,7 +239,6 @@ class _MenuBottomSheetBody extends StatelessWidget {
       borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        height: 250, // Adjust as needed
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
