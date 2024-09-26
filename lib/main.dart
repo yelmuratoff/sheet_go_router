@@ -47,8 +47,9 @@ class NestedTabNavigationExampleApp extends StatelessWidget {
             routes: <RouteBase>[
               GoRoute(
                 path: '/menu',
-                pageBuilder: (context, state) => const BottomSheetPage(
-                  child: _MenuBottomSheetBody(),
+                pageBuilder: (context, state) => BottomSheetPage(
+                  key: state.pageKey,
+                  child: const _MenuBottomSheetBody(),
                 ),
               ),
             ],
@@ -80,10 +81,6 @@ class NestedTabNavigationExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp.router(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
         routerConfig: _router,
       );
 }
@@ -114,26 +111,29 @@ class _MenuBottomSheetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
+    return Material(
+      color: Colors.transparent,
+      child: DecoratedBox(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            title: const Text('Option 1'),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text('Option 2'),
-            onTap: () {},
-          ),
-        ],
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              title: const Text('Option 1'),
+              onTap: () {},
+            ),
+            ListTile(
+              title: const Text('Option 2'),
+              onTap: () {},
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -152,7 +152,6 @@ class ScaffoldWithNavBar extends StatefulWidget {
 }
 
 class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> with TickerProviderStateMixin {
-  bool _isSheetOpen = false;
   late final TabController _tabController = TabController(length: 5, vsync: this);
 
   @override
@@ -164,7 +163,6 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> with TickerProv
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: const ValueKey<String>('ScaffoldWithNavBar'),
       body: widget.navigationShell,
       bottomNavigationBar: TabBar(
         controller: _tabController,
@@ -177,18 +175,11 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> with TickerProv
           Tab(icon: Icon(Icons.settings), text: 'D'),
         ],
         onTap: (int index) async {
-          await Future.delayed(const Duration(milliseconds: 200), () {
-            if (_isSheetOpen) {
-              setState(() {
-                _isSheetOpen = false;
-                context.pop();
-              });
-            }
-          });
           if (index == 2) {
             setState(() {
-              _isSheetOpen = true;
-              GoRouter.of(context).push('/menu');
+              GoRouter.of(context).push('/menu').then((_) {
+                _tabController.animateTo(widget.navigationShell.currentIndex);
+              });
             });
           } else {
             widget.navigationShell.goBranch(
@@ -237,9 +228,10 @@ class _TopIndicatorBox extends BoxPainter {
 class BottomSheetPage extends Page {
   const BottomSheetPage({
     required this.child,
-    this.showDragHandle = false,
+    this.showDragHandle = true,
     this.useSafeArea = false,
     super.key,
+    super.restorationId = 'bottomSheet',
   });
   final Widget child;
   final bool showDragHandle;
