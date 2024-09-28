@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final GlobalKey<NavigatorState> _sectionANavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'sectionANav');
-final GlobalKey<NavigatorState> menuKey = GlobalKey();
 
 void main() {
   runApp(NestedTabNavigationExampleApp());
@@ -63,20 +62,24 @@ class NestedTabNavigationExampleApp extends StatelessWidget {
           ),
           StatefulShellBranch(
             routes: <RouteBase>[
-              GoRoute(path: '/menu', builder: (context, state) => const SizedBox(), routes: [
-                GoRoute(
-                  path: 'events',
-                  builder: (context, state) => const TabScreen(
-                    text: 'Events',
+              GoRoute(
+                path: '/menu',
+                builder: (context, state) => const SizedBox(),
+                routes: [
+                  GoRoute(
+                    path: 'events',
+                    builder: (context, state) => const TabScreen(
+                      text: 'Events',
+                    ),
                   ),
-                ),
-                GoRoute(
-                  path: 'vacancies',
-                  builder: (context, state) => const TabScreen(
-                    text: 'Vacancies',
+                  GoRoute(
+                    path: 'vacancies',
+                    builder: (context, state) => const TabScreen(
+                      text: 'Vacancies',
+                    ),
                   ),
-                ),
-              ]),
+                ],
+              ),
             ],
           ),
           StatefulShellBranch(
@@ -195,7 +198,6 @@ class ScaffoldWithNavBar extends StatefulWidget {
 
 class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> with TickerProviderStateMixin {
   late final TabController _tabController = TabController(length: 5, vsync: this);
-  final GlobalKey<State> _menuNavigatorKey = GlobalKey<State>();
 
   @override
   void dispose() {
@@ -214,7 +216,6 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> with TickerProv
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _menuNavigatorKey,
       body: widget.navigationShell,
       bottomNavigationBar: _BottomNavigationBar(
         navigationShell: widget.navigationShell,
