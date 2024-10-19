@@ -15,6 +15,25 @@ class NestedTabNavigationExampleApp extends StatelessWidget {
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/a',
     routes: <RouteBase>[
+      GoRoute(
+        path: '/success',
+        builder: (BuildContext context, GoRouterState state) => TabScreen(
+          text: 'Success',
+          onPressed: () {
+            context.pop(true);
+            context.pop(false);
+          },
+        ),
+      ),
+      GoRoute(
+        path: '/categories',
+        builder: (BuildContext context, GoRouterState state) => TabScreen(
+          text: 'Categories',
+          onPressed: () async {
+            await GoRouter.of(context).push<bool>('/success');
+          },
+        ),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
           return ScaffoldWithNavBar(
@@ -26,11 +45,35 @@ class NestedTabNavigationExampleApp extends StatelessWidget {
             navigatorKey: _sectionANavigatorKey,
             routes: <RouteBase>[
               GoRoute(
-                path: '/a',
-                builder: (BuildContext context, GoRouterState state) => const TabScreen(
-                  text: 'A',
-                ),
-              ),
+                  path: '/a',
+                  builder: (BuildContext context, GoRouterState state) => TabScreen(
+                        text: 'A',
+                        onPressed: () async {
+                          await GoRouter.of(context).push<bool>('/categories');
+                        },
+                      ),
+                  routes: [
+                    GoRoute(
+                        path: 'aa',
+                        builder: (BuildContext context, GoRouterState state) => TabScreen(
+                              text: 'AA',
+                              onPressed: () {
+                                GoRouter.of(context).push('/a/aa/aaa');
+                              },
+                            ),
+                        routes: [
+                          GoRoute(
+                            path: 'aaa',
+                            builder: (BuildContext context, GoRouterState state) => TabScreen(
+                              text: 'AAA',
+                              onPressed: () {
+                                context.pop();
+                                context.pop();
+                              },
+                            ),
+                          ),
+                        ]),
+                  ]),
             ],
           ),
           StatefulShellBranch(
@@ -88,18 +131,29 @@ class NestedTabNavigationExampleApp extends StatelessWidget {
 class TabScreen extends StatelessWidget {
   const TabScreen({
     required this.text,
+    this.onPressed,
     super.key,
   });
 
   final String text;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              text,
+              style: const TextStyle(fontSize: 24),
+            ),
+            ElevatedButton(
+              onPressed: onPressed,
+              child: const Text('Go'),
+            ),
+          ],
         ),
       ),
     );
