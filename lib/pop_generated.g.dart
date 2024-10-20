@@ -28,8 +28,7 @@ extension $SuccessRouteExtension on SuccessRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -40,8 +39,7 @@ RouteBase get $categoriesRoute => GoRouteData.$route(
     );
 
 extension $CategoriesRouteExtension on CategoriesRoute {
-  static CategoriesRoute _fromState(GoRouterState state) =>
-      const CategoriesRoute();
+  static CategoriesRoute _fromState(GoRouterState state) => const CategoriesRoute();
 
   String get location => GoRouteData.$location(
         '/categories',
@@ -51,8 +49,7 @@ extension $CategoriesRouteExtension on CategoriesRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -103,8 +100,7 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
     );
 
 extension $MainShellRouteDataExtension on MainShellRouteData {
-  static MainShellRouteData _fromState(GoRouterState state) =>
-      const MainShellRouteData();
+  static MainShellRouteData _fromState(GoRouterState state) => const MainShellRouteData();
 }
 
 extension $ARouteDataExtension on ARouteData {
@@ -118,8 +114,7 @@ extension $ARouteDataExtension on ARouteData {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -135,8 +130,7 @@ extension $BRouteDataExtension on BRouteData {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -152,8 +146,7 @@ extension $BBRouteDataExtension on BBRouteData {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -169,8 +162,7 @@ extension $CRouteDataExtension on CRouteData {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -186,8 +178,7 @@ extension $DRouteDataExtension on DRouteData {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
